@@ -14,6 +14,7 @@ socket.bind("tcp://*:%s" % port)
 
 while True:
     message = socket.recv()
-    print('Got Message!!')
-    socket.send('<OK>')
+    print message
+    output = '<OK got message: %s>', % message
+    socket.send(output)
 
