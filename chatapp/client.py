@@ -1,19 +1,17 @@
 import zmq
 import sys
+import time
 
 
-port = "5556"
-if len(sys.argv) > 1:
-    port = sys.argv[1]
-    int(port)
-
+PORT = '5556'
+IP = sys.argv[1]
 
 context = zmq.Context()
-socket = context.socket(zmq.REP)
-socket.bind("tcp://*:%s" % port)
+socket = context.socket(zmq.REQ)
+socket.connect("tcp://%s:%s" % (IP, PORT))
 
-while True:
-    message = socket.recv()
-    print('Got Message!!')
-    socket.send('<OK>')
-
+#send request
+socket.send_string('Hello Server')
+time.sleep(1)
+msg = socket.recv_string()
+print(msg)
